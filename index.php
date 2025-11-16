@@ -4,6 +4,8 @@ session_start();
 $logged_in = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === TRUE;
 $nama_user = $logged_in ? htmlspecialchars($_SESSION['nama']) : 'Guest';
 
+// Bagian ini akan mengambil pesan "Selamat datang" saat login,
+// tapi tidak akan ada pesan saat logout (karena logout.php sudah diubah)
 $login_success_message = '';
 if (isset($_SESSION['login_success'])) {
     $login_success_message = $_SESSION['login_success'];
@@ -50,7 +52,6 @@ if (isset($_SESSION['login_success'])) {
   <body class="bg-gray-50 font-sans">
     
     <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-blue-900/90 z-[60] p-4">
-        <!-- ... (Isi menu mobile sama seperti sebelumnya) ... -->
         <button id="close-menu" class="absolute top-4 right-4 text-white p-2">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -59,9 +60,9 @@ if (isset($_SESSION['login_success'])) {
         <div class="flex flex-col space-y-4 pt-16 text-center">
             <a href="index.php" class="text-white text-2xl font-semibold hover:text-blue-200 py-2">Home</a>
             <a href="#layanan" class="text-blue-200 text-2xl font-semibold hover:text-white py-2">Layanan</a>
-            <a href="#harga" class="text-blue-200 text-2xl font-semibold hover:text-white py-2">Harga</a>
             <a href="#kontak" class="text-blue-200 text-2xl font-semibold hover:text-white py-2">Kontak</a>
             <?php if ($logged_in): ?>
+                <a href="dashboard.php" class="text-white text-2xl font-semibold hover:text-blue-200 py-2">Pesan</a>
                 <a href="logout.php" class="bg-red-500 text-white px-6 py-3 mt-4 rounded-full font-bold hover:bg-red-600 transition">Logout (<?php echo $nama_user; ?>)</a>
             <?php else: ?>
                 <a href="login.php" class="bg-white text-blue-600 px-6 py-3 mt-4 rounded-full font-bold hover:bg-gray-100 transition">Masuk / Login</a>
@@ -69,7 +70,6 @@ if (isset($_SESSION['login_success'])) {
         </div>
     </div>
 
-    <!-- Perbaikan: Navbar -->
     <nav class="bg-white shadow-lg sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
@@ -78,46 +78,34 @@ if (isset($_SESSION['login_success'])) {
               💧 SuperLaundry
             </a>
           </div>
-          <!-- Menu Desktop -->
+          
           <div class="hidden md:flex md:space-x-8 items-center">
-    <a href="index.php" class="text-gray-700 hover:text-biru-utama font-medium">Home</a>
-    <a href="#layanan" class="text-gray-500 hover:text-biru-utama font-medium">Layanan</a>
-    <a href="#harga" class="text-gray-500 hover:text-biru-utama font-medium">Harga</a>
-    <a href="#kontak" class="text-gray-500 hover:text-biru-utama font-medium">Kontak</a>
-    <?php if ($logged_in): ?>
-        <a href="pesan.php" class="text-gray-500 hover:text-biru-utama font-medium">Pesan</a>
-        <span class="text-biru-teks font-bold">Halo, <?php echo $nama_user; ?></span>
-        <a
-            href="logout.php"
-            class="bg-red-500 text-white ml-6 px-4 py-2 rounded-full font-semibold hover:bg-red-700 transition duration-300 shadow-md"
-        >
-            Logout
-        </a>
-    <?php else: ?>
-        <a
-            href="login.php"
-            class="bg-biru-utama text-white ml-6 px-4 py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 shadow-md"
-        >
-            Masuk / Login
-        </a>
-    <?php endif; ?>
-    </div>
-          <!-- Tombol Menu Mobile -->
+            <a href="index.php" class="text-gray-700 hover:text-biru-utama font-medium">Home</a>
+            <a href="#layanan" class="text-gray-500 hover:text-biru-utama font-medium">Layanan</a>
+            <a href="#kontak" class="text-gray-500 hover:text-biru-utama font-medium">Kontak</a>
+            
+            <?php if ($logged_in): ?>
+                <a href="dashboard.php" class="text-gray-500 hover:text-biru-utama font-medium">Pesan</a>
+                <span class="text-biru-teks font-bold">Halo, <?php echo $nama_user; ?></span>
+                <a
+                    href="logout.php"
+                    class="bg-red-500 text-white ml-6 px-4 py-2 rounded-full font-semibold hover:bg-red-700 transition duration-300 shadow-md"
+                >
+                    Logout
+                </a>
+            <?php else: ?>
+                <a
+                    href="login.php"
+                    class="bg-biru-utama text-white ml-6 px-4 py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 shadow-md"
+                >
+                    Masuk / Login
+                </a>
+            <?php endif; ?> </div>
+          
           <div class="md:hidden">
             <button id="open-menu" aria-label="Toggle Menu" class="text-gray-700 p-2 hover:text-blue-600 transition">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
               </svg>
             </button>
           </div>
@@ -126,17 +114,15 @@ if (isset($_SESSION['login_success'])) {
     </nav>
     
     <main>
-    <!-- Tampilkan pesan sukses login/logout di bagian atas -->
     <?php if ($login_success_message): ?>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-md" role="alert">
-                <p class="font-bold">Informasi Sesi</p>
+                <p class="font-bold">Informasi</p>
                 <p><?php echo $login_success_message; ?></p>
             </div>
         </div>
     <?php endif; ?>
 
-    <!-- Header (Konten di bawah ini sama seperti sebelumnya) -->
     <header class="bg-biru-utama text-white animated fadeInUp">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
         <div class="flex flex-col md:flex-row items-center">
@@ -167,9 +153,6 @@ if (isset($_SESSION['login_success'])) {
       </div>
     </header>
 
-    <!-- Bagian Layanan, Harga, Cara Kerja, Testimoni, dan Footer -->
-    
-    <!-- (Konten Bagian Layanan - #layanan) -->
     <section id="layanan" class="py-20 bg-blue-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
@@ -182,324 +165,282 @@ if (isset($_SESSION['login_success'])) {
         </div>
 
         <div class="grid md:grid-cols-3 gap-8">
-          <!-- Card Kiloan -->
-          <div
-            class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama"
-          >
-            <div
-              class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            
+          <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
+            <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.38 3.46 16 2a4 4 0 0 0-8 0L3.62 3.46a2 2 0 0 0-1.34 2.2l1.52 12.18A2 2 0 0 0 5.78 20h12.44a2 2 0 0 0 1.98-2.16l1.52-12.18a2 2 0 0 0-1.34-2.2zM8 2c0-1.1.9-2 2-2s2 .9 2 2L8 2z"/>
               </svg>
             </div>
-            <h3 class="text-2xl font-semibold text-biru-teks mb-3">
-              Cuci Kiloan Hemat
-            </h3>
-            <p class="text-gray-600">
-              Solusi hemat untuk pakaian harian Anda. Bersih, wangi, dan rapi.
-              Selesai dalam **1-2 hari**.
-            </p>
+            <h3 class="text-2xl font-semibold text-biru-teks mb-3">Cuci Kering Reguler</h3>
+            <p class="text-gray-600 mb-4 h-20">Pakaian bersih, kering 100%, dan dilipat rapi. Pilihan praktis untuk pakaian harian (2 hari kerja).</p>
+            <div class="flex justify-between items-center">
+                <span class="text-lg font-bold text-biru-utama">Rp 8.000/kg</span>
+                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="bg-biru-utama text-white text-sm py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition">
+                    Pesan
+                </a>
+            </div>
           </div>
           
-          <!-- Card Satuan -->
-          <div
-            class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama"
-          >
-            <div
-              class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12 12 0 0012 21.642a12 12 0 008.618-3.04"/>
+          <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
+            <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM12 7v10m-4-5h8m-8-3h8"/>
+                <path d="M16 2v4a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V2"/>
               </svg>
             </div>
-            <h3 class="text-2xl font-semibold text-biru-teks mb-3">
-              Cuci Satuan Premium
-            </h3>
-            <p class="text-gray-600">
-              Perawatan premium untuk pakaian kesayangan Anda seperti **jas, gaun,
-              atau kebaya**. Perawatan khusus tanpa dicampur.
-            </p>
+            <h3 class="text-2xl font-semibold text-biru-teks mb-3">Cuci Setrika</h3>
+            <p class="text-gray-600 mb-4 h-20">Paket lengkap! Pakaian dicuci, dikeringkan, disetrika licin, dan diwangikan. Siap pakai!</p>
+            <div class="flex justify-between items-center">
+                <span class="text-lg font-bold text-biru-utama">Rp 12.000/kg</span>
+                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="bg-biru-utama text-white text-sm py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition">
+                    Pesan
+                </a>
+            </div>
           </div>
 
-          <!-- Card Express -->
-          <div
-            class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama"
-          >
-            <div
-              class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
+            <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
             </div>
-            <h3 class="text-2xl font-semibold text-biru-teks mb-3">
-              Express Kilat (6 Jam)
-            </h3>
-            <p class="text-gray-600">
-              Butuh cepat? Layanan express kami siap membuat pakaian Anda bersih
-              dan siap pakai dalam **hitungan jam**.
-            </p>
+            <h3 class="text-2xl font-semibold text-biru-teks mb-3">Kilat 6 Jam</h3>
+            <p class="text-gray-600 mb-4 h-20">Layanan cuci setrika super cepat. Pakaian Anda siap hanya dalam 6 jam.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-lg font-bold text-biru-utama">Rp 20.000/kg</span>
+                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="bg-biru-utama text-white text-sm py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition">
+                    Pesan
+                </a>
+            </div>
           </div>
-        </div>
+
+          <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
+            <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19.4 15c-1.2 0-2.4-.6-3.4-1.6l-2-2.7c-.6-.8-1.5-1.3-2.5-1.3H2.5L2 9.5c.3-.2.6-.4 1-.4h11.5c1.1 0 2.1.8 2.5 1.8l1.7 4.9c.2.6.7 1 1.3 1H22v1c-1 0-1.9-.5-2.6-1z"/>
+                  <path d="M19 17c0-1.1-.9-2-2-2H8.2c-.3 0-.5.1-.7.3L4 18.6V20a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-3z"/>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-semibold text-biru-teks mb-3">Laundry Sepatu</h3>
+            <p class="text-gray-600 mb-4 h-20">Perawatan *deep cleaning* untuk sneakers, kets, atau sepatu formal Anda. Bersih seperti baru.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-lg font-bold text-biru-utama">Rp 35.000/psg</span>
+                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="bg-biru-utama text-white text-sm py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition">
+                    Pesan
+                </a>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
+            <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a9 9 0 0 0-9 9v5.5a3.5 3.5 0 0 0 3.5 3.5h11A3.5 3.5 0 0 0 21 16.5V11a9 9 0 0 0-9-9z"/>
+                  <path d="M3 12h18"/>
+                  <path d="M14 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-semibold text-biru-teks mb-3">Laundry Helm</h3>
+            <p class="text-gray-600 mb-4 h-20">Helm bersih, wangi, dan bebas bakteri. Cuci kering bagian dalam dan luar helm.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-lg font-bold text-biru-utama">Rp 25.000/pcs</span>
+                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="bg-biru-utama text-white text-sm py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition">
+                    Pesan
+                </a>
+            </div>
+          </div>
+          
+
+          <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
+            <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10V8.2A2 2 0 0 0 20.2 6H3.8A2 2 0 0 0 2 8.2V10m0 4v1.8A2 2 0 0 0 3.8 18h16.4a2 2 0 0 0 1.8-1.8V14"/>
+                  <path d="M2 10v4h20v-4H2z"/>
+                  <path d="M6 10v4m4-4v4m4-4v4m4-4v4"/>
+                </svg>
+            </div>
+             <h3 class="text-2xl font-semibold text-biru-teks mb-3">Cuci Satuan Jas </h3>
+            <p class="text-gray-600 mb-4 h-20">Perawatan khusus jas dan blazer</p>
+            <div class="flex justify-between items-center">
+                <span class="text-lg font-bold text-biru-utama">Rp 50.000/pcs</span>
+                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="bg-biru-utama text-white text-sm py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition">
+                    Pesan
+                </a>
+            </div>
+          </div>
+          
+
+          <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
+            <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10V8.2A2 2 0 0 0 20.2 6H3.8A2 2 0 0 0 2 8.2V10m0 4v1.8A2 2 0 0 0 3.8 18h16.4a2 2 0 0 0 1.8-1.8V14"/>
+                  <path d="M2 10v4h20v-4H2z"/>
+                  <path d="M6 10v4m4-4v4m4-4v4m4-4v4"/>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-semibold text-biru-teks mb-3">Cuci Satuan Jas </h3>
+            <p class="text-gray-600 mb-4 h-20">Perawatan khusus jas dan blazer</p>
+            <div class="flex justify-between items-center">
+                <span class="text-lg font-bold text-biru-utama">Rp 50.000/pcs</span>
+                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="bg-biru-utama text-white text-sm py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition">
+                    Pesan
+                </a>
+            </div>
+          </div>
+          
+
+          <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
+            <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10V8.2A2 2 0 0 0 20.2 6H3.8A2 2 0 0 0 2 8.2V10m0 4v1.8A2 2 0 0 0 3.8 18h16.4a2 2 0 0 0 1.8-1.8V14"/>
+                  <path d="M2 10v4h20v-4H2z"/>
+                  <path d="M6 10v4m4-4v4m4-4v4m4-4v4"/>
+                </svg>
+            </div>
+            
+            <h3 class="text-2xl font-semibold text-biru-teks mb-3">Laundry Tikar</h3>
+            <p class="text-gray-600 mb-4 h-20">Cuci tikar atau karpet, menghilangkan debu, tungau, dan noda. (Harga per meter persegi).</p>
+            <div class="flex justify-between items-center">
+                <span class="text-lg font-bold text-biru-utama">Rp 15.000/m²</span>
+                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="bg-biru-utama text-white text-sm py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition">
+                    Pesan
+                </a>
+            </div>
+          </div>
+
+        </div> 
       </div>
     </section>
 
-    <!-- (Konten Bagian Harga - #harga) -->
-    <section id="harga" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-biru-teks mb-4">
-                    Pilihan Harga Terbaik Kami 💰
-                </h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Kualitas premium tidak harus mahal. Pilih paket yang sesuai kebutuhan Anda.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Paket 1: Kiloan Reguler -->
-                <div class="bg-white border border-gray-200 rounded-xl p-8 text-center shadow-lg transform hover:shadow-xl transition duration-300">
-                    <h3 class="text-2xl font-bold text-biru-teks mb-2">Reguler Kiloan</h3>
-                    <p class="text-sm text-gray-500 mb-6">Paling Populer</p>
-                    <div class="text-4xl font-extrabold text-biru-utama mb-4">
-                        Rp 8.000<span class="text-xl font-normal text-gray-500">/kg</span>
-                    </div>
-                    <ul class="text-left space-y-3 text-gray-600 mb-8">
-                        <li class="flex items-center">✅ Cuci & Kering</li>
-                        <li class="flex items-center">✅ Lipat Rapi</li>
-                        <li class="flex items-center">✅ Pewangi Premium</li>
-                        <li class="flex items-center">❌ Antar-Jemput (Min. 5kg)</li>
-                        <li class="flex items-center">🕒 Selesai 2 Hari</li>
-                    </ul>
-                    <!-- <a href="#" class="block bg-biru-utama text-white py-3 rounded-full font-semibold hover:bg-blue-700 transition">Pesan Sekarang</a> -->
-                </div>
-
-                <!-- Paket 2: Kiloan Setrika -->
-                <div class="bg-biru-utama border-4 border-blue-400 rounded-xl p-8 text-center shadow-2xl scale-105">
-                    <h3 class="text-3xl font-bold text-white mb-2">Lengkap Setrika</h3>
-                    <p class="text-sm text-blue-200 mb-6">Pilihan Terbaik Kami</p>
-                    <div class="text-5xl font-extrabold text-yellow-300 mb-4">
-                        Rp 12.000<span class="text-xl font-normal text-blue-200">/kg</span>
-                    </div>
-                    <ul class="text-left space-y-3 text-blue-100 mb-8">
-                        <li class="flex items-center">✅ Cuci, Kering & **Setrika**</li>
-                        <li class="flex items-center">✅ Lipat Rapi</li>
-                        <li class="flex items-center">✅ Pewangi Premium</li>
-                        <li class="flex items-center">✅ **Antar-Jemput Gratis**</li>
-                        <li class="flex items-center">🕒 Selesai 24 Jam</li>
-                    </ul>
-                    <!-- <a href="#" class="block bg-white text-biru-utama py-3 rounded-full font-bold hover:bg-gray-100 transition shadow-lg">Ambil Paket Ini!</a> -->
-                </div>
-
-                <!-- Paket 3: Satuan Premium -->
-                <div class="bg-white border border-gray-200 rounded-xl p-8 text-center shadow-lg transform hover:shadow-xl transition duration-300">
-                    <h3 class="text-2xl font-bold text-biru-teks mb-2">Satuan (per Pcs)</h3>
-                    <p class="text-sm text-gray-500 mb-6">Untuk Pakaian Khusus</p>
-                    <div class="text-4xl font-extrabold text-biru-utama mb-4">
-                        Mulai dari
-                        <span class="text-xl font-normal text-gray-500">Rp 20.000</span>
-                    </div>
-                    <ul class="text-left space-y-3 text-gray-600 mb-8">
-                        <li class="flex items-center">✅ Perawatan Khusus</li>
-                        <li class="flex items-center">✅ Dry Cleaning (Opsional)</li>
-                        <li class="flex items-center">✅ Pengemasan Eksklusif</li>
-                        <li class="flex items-center">✅ Antar-Jemput</li>
-                        <li class="flex items-center">🕒 Waktu Tergantung Jenis</li>
-                    </ul>
-                    <!-- <a href="#" class="block bg-gray-500 text-white py-3 rounded-full font-semibold hover:bg-gray-600 transition">Konsultasi Dulu</a> -->
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- (Konten Bagian Cara Kerja - #cara-kerja) -->
-    <section id="cara-kerja" class="py-20 bg-blue-50">
+    <section id="paket-mahasiswa" class="py-20 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="text-3xl md:text-4xl font-bold text-biru-teks mb-4">
-            3 Langkah Mudah & Cepat 💨
+            🎒 Paket Hemat Mahasiswa
           </h2>
           <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-            Proses pemesanan sangat mudah dan cepat. Kami urus sisanya.
+            Dirancang khusus untuk kebutuhan anak kos. Bersih, cepat, dan ramah di kantong!
           </p>
         </div>
 
-        <div
-          class="flex flex-col md:flex-row justify-between space-y-10 md:space-y-0 md:space-x-8"
-        >
-          <!-- Langkah 1 -->
-          <div class="flex flex-col items-center text-center">
-            <div
-              class="bg-biru-utama text-white rounded-full h-20 w-20 flex items-center justify-center text-3xl font-bold mb-4 shadow-lg"
-            >
-              1
+        <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+          
+          <div class="bg-biru-muda rounded-xl shadow-lg overflow-hidden border-l-8 border-biru-utama">
+            <div class="flex items-center p-6">
+              <div class="flex-shrink-0 bg-biru-utama text-white rounded-full h-20 w-20 flex items-center justify-center shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div class="ml-6">
+                <h3 class="text-2xl font-bold text-biru-teks">Paket Kebut 3 Hari</h3>
+                <p class="text-gray-700 mt-1">Cuci + Setrika. Dijamin rapi untuk dipakai kuliah lagi.</p>
+                <span class="text-xl font-extrabold text-biru-utama mt-2 block">Rp 10.000 / kg</span>
+                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="mt-3 inline-block bg-biru-utama text-white text-xs py-2 px-3 rounded-full font-semibold hover:bg-blue-700 transition">
+                    Pesan Paket Ini
+                </a>
+              </div>
             </div>
-            <h3 class="text-xl font-semibold text-biru-teks mb-2">
-              Pesan & Timbang
-            </h3>
-            <p class="text-gray-600 max-w-xs">
-              Hubungi kami via WA atau web. Kami akan datang menjemput dan
-              menimbang cucian Anda.
-            </p>
           </div>
-          <!-- Langkah 2 -->
-          <div class="flex flex-col items-center text-center">
-            <div
-              class="bg-biru-utama text-white rounded-full h-20 w-20 flex items-center justify-center text-3xl font-bold mb-4 shadow-lg"
-            >
-              2
+          
+          <div class="bg-biru-muda rounded-xl shadow-lg overflow-hidden border-l-8 border-biru-utama">
+            <div class="flex items-center p-6">
+              <div class="flex-shrink-0 bg-biru-utama text-white rounded-full h-20 w-20 flex items-center justify-center shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4M12 3v18M18 3v4m2-2h-4m-2 12v4m2-2h-4" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 21V3a2 2 0 012-2h10a2 2 0 012 2v18a2 2 0 01-2 2H7a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <div class="ml-6">
+                <h3 class="text-2xl font-bold text-biru-teks">Paket Bulanan (20kg)</h3>
+                <p class="text-gray-700 mt-1">Bayar sekali untuk 20kg cucian (cuci setrika) selama sebulan.</p>
+                <span class="text-xl font-extrabold text-biru-utama mt-2 block">Rp 200.000 / bulan</span>
+                 <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="mt-3 inline-block bg-biru-utama text-white text-xs py-2 px-3 rounded-full font-semibold hover:bg-blue-700 transition">
+                    Pesan Paket Ini
+                </a>
+              </div>
             </div>
-            <h3 class="text-xl font-semibold text-biru-teks mb-2">
-              Kami Proses Profesional
-            </h3>
-            <p class="text-gray-600 max-w-xs">
-              Pakaian Anda dicuci terpisah, menggunakan deterjen berkualitas,
-              dan disetrika dengan sempurna.
-            </p>
           </div>
-          <!-- Langkah 3 -->
-          <div class="flex flex-col items-center text-center">
-            <div
-              class="bg-biru-utama text-white rounded-full h-20 w-20 flex items-center justify-center text-3xl font-bold mb-4 shadow-lg"
-            >
-              3
-            </div>
-            <h3 class="text-xl font-semibold text-biru-teks mb-2">
-              Antar Kembali Rapi
-            </h3>
-            <p class="text-gray-600 max-w-xs">
-              Kami antar kembali pakaian Anda dalam keadaan bersih, wangi, dan
-              rapi. Siap pakai di depan pintu Anda!
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- (Konten Bagian Testimoni - #testimoni) -->
-    <section id="testimoni" class="py-20 bg-white">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold text-biru-teks mb-8">
-          Apa Kata Pelanggan Kami? ⭐⭐⭐⭐⭐
-        </h2>
-
-        <div class="bg-blue-50 rounded-xl shadow-2xl p-8 border-t-8 border-biru-utama">
-          <img
-            src="https://via.placeholder.com/100" 
-            alt="Foto Pelanggan"
-            class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-blue-400 object-cover"
-          />
-          <blockquote class="text-xl italic text-gray-700 mb-6">
-            "SuperLaundry benar-benar penyelamat! Hasilnya selalu bersih, wangi,
-            dan lipatannya rapi banget. Layanan antar jemputnya juga on-time.
-            **Sangat direkomendasikan!**"
-          </blockquote>
-          <p class="font-bold text-biru-utama text-lg">Anya Geraldine</p>
-          <p class="text-gray-500">Mahasiswa, Jakarta</p>
         </div>
       </div>
     </section>
     </main>
 
-    <!-- (Konten Footer - #kontak) -->
     <footer id="kontak" class="bg-biru-teks text-blue-100 py-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-4 gap-8">
-          <!-- Kolom 1: Logo & Deskripsi -->
-          <div>
-            <h4 class="text-2xl font-bold text-white mb-4">💧 SuperLaundry</h4>
-            <p class="text-blue-200 text-sm">
-              Kami adalah layanan laundry profesional yang berkomitmen
-              memberikan hasil terbaik untuk pakaian Anda, hemat waktu, dan
-              bebas repot.
-            </p>
-          </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-2xl font-bold text-white mb-4">💧 SuperLaundry</h4>
+                    <p class="text-blue-200 text-sm">
+                    Kami adalah layanan laundry profesional yang berkomitmen
+                    memberikan hasil terbaik untuk pakaian Anda, hemat waktu, dan
+                    bebas repot.
+                    </p>
+                </div>
 
-          <!-- Kolom 2: Navigasi -->
-          <div>
-            <h4 class="text-xl font-bold text-white mb-4">Navigasi Cepat</h4>
-            <ul class="space-y-2">
-              <li>
-                <a href="index.php" class="text-blue-200 hover:text-white transition">Home</a>
-              </li>
-              <li>
-                <a href="#layanan" class="text-blue-200 hover:text-white transition"
-                  >Layanan</a
-                >
-              </li>
-              <li>
-                <a href="#harga" class="text-blue-200 hover:text-white transition"
-                  >Harga</a
-                >
-              </li>
-              <li>
-                <a href="#kontak" class="text-blue-200 hover:text-white transition"
-                  >Kontak</a
-                >
-              </li>
-            </ul>
-          </div>
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-4">Navigasi Cepat</h4>
+                    <ul class="space-y-2">
+                    <li><a href="index.php" class="text-blue-200 hover:text-white transition">Home</a></li>
+                    <li><a href="#layanan" class="text-blue-200 hover:text-white transition">Layanan</a></li>
+                    <li><a href="#paket-mahasiswa" class="text-blue-200 hover:text-white transition">Paket Mahasiswa</a></li>
+                    <li><a href="#kontak" class="text-blue-200 hover:text-white transition">Kontak</a></li>
+                    </ul>
+                </div>
 
-          <!-- Kolom 3: Hubungi Kami -->
-          <div>
-            <h4 class="text-xl font-bold text-white mb-4">Hubungi Kami</h4>
-            <ul class="space-y-2 text-blue-200">
-              <li>📍 Jl. Kebersihan No. 123, Jakarta</li>
-              <li>📞 **(021) 123-4567**</li>
-              <li>📧 halo@superlaundry.com</li>
-              <li>⏰ Buka: 08:00 - 20:00 WIB</li>
-            </ul>
-          </div>
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-4">Hubungi Kami</h4>
+                    <ul class="space-y-2 text-blue-200">
+                    <li>📍 Jl. Kebersihan No. 123, Jakarta</li>
+                    <li>📞 **(021) 123-4567**</li>
+                    <li>📧 halo@superlaundry.com</li>
+                    <li>⏰ Buka: 08:00 - 20:00 WIB</li>
+                    </ul>
+                </div>
 
-          <!-- Kolom 4: Sosial Media -->
-          <div>
-            <h4 class="text-xl font-bold text-white mb-4">Ikuti Kami</h4>
-            <div class="flex space-x-4">
-                <a href="#" class="text-blue-200 hover:text-white transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.588-1.333h2.412v-3h-3.412c-4.145 0-5.588 2.333-5.588 5.667v1.333z"/></svg>
-                </a>
-                <a href="#" class="text-blue-200 hover:text-white transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.77 1.624 4.981 4.765.101 1.542.112 1.815.112 4.025s-.011 2.483-.112 4.025c-.21 3.14-.932 4.618-4.981 4.765-1.266.058-1.645.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.77-1.624-4.981-4.765-.101-1.542-.112-1.815-.112-4.025s.011-2.483.112-4.025c.211-3.14 1.233-4.509 4.981-4.765 1.266-.057 1.645-.07 4.85-.07zm0 10.163c-2.076 0-3.754 1.678-3.754 3.754s1.678 3.754 3.754 3.754 3.754-1.678 3.754-3.754-1.678-3.754-3.754-3.754zm4.619-10.871c0 .542.44.982.982.982s.982-.44.982-.982-.44-.982-.982-.982-.982.44-.982.982z"/></svg>
-                </a>
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-4">Ikuti Kami</h4>
+                    <div class="flex space-x-4">
+                    <a href="#" class="text-blue-200 hover:text-white transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.588-1.333h2.412v-3h-3.412c-4.145 0-5.588 2.333-5.588 5.667v1.333z"/></svg>
+                    </a>
+                    <a href="#" class="text-blue-200 hover:text-white transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.77 1.624 4.981 4.765.101 1.542.112 1.815.112 4.025s-.011 2.483-.112 4.025c-.21 3.14-.932 4.618-4.981 4.765-1.266.058-1.645.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.77-1.624-4.981-4.765-.101-1.542-.112-1.815-.112-4.025s.011-2.483.112-4.025c.211-3.14 1.233-4.509 4.981-4.765 1.266-.057 1.645-.07 4.85-.07zm0 10.163c-2.076 0-3.754 1.678-3.754 3.754s1.678 3.754 3.754 3.754 3.754-1.678 3.754-3.754-1.678-3.754-3.754-3.754zm4.619-10.871c0 .542.44.982.982.982s.982-.44.982-.982-.44-.982-.982-.982-.982.44-.982.982z"/></svg>
+                    </a>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div
-          class="border-t border-blue-700 mt-10 pt-8 text-center text-blue-300"
-        >
-          <p>
-            &copy; 2025 SuperLaundry. Dibuat dengan ❤ menggunakan Tailwind CSS.
-          </p>
+            <div class="border-t border-blue-700 mt-10 pt-8 text-center text-blue-300">
+                <p>&copy; 2025 SuperLaundry. Dibuat dengan ❤ menggunakan Tailwind CSS.</p>
+            </div>
         </div>
-      </div>
     </footer>
     
-    <!-- Script untuk Menu Mobile (Tidak berubah) -->
     <script>
         const openMenuBtn = document.getElementById('open-menu');
         const closeMenuBtn = document.getElementById('close-menu');
         const mobileMenu = document.getElementById('mobile-menu');
         const navLinks = mobileMenu.querySelectorAll('a');
 
-        // Fungsi untuk membuka menu
         openMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.remove('hidden');
             document.body.style.overflow = 'hidden'; 
         });
 
-        // Fungsi untuk menutup menu
         const closeMenu = () => {
             mobileMenu.classList.add('hidden');
             document.body.style.overflow = ''; 
         };
 
         closeMenuBtn.addEventListener('click', closeMenu);
-
-        // Menutup menu saat link di klik (untuk navigasi ke section)
         navLinks.forEach(link => {
-            link.addEventListener('click', closeMenu);
+            // Perbaikan kecil: tutup menu saat link di-klik
+            if (link.href.includes('#')) {
+                 link.addEventListener('click', closeMenu);
+            }
         });
     </script>
   </body>

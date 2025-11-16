@@ -1,9 +1,14 @@
 <?php
+// 1. Mulai sesi yang ada
 session_start();
-$_SESSION = array();
+
+// 2. Hapus semua variabel di dalam sesi
+session_unset();
+
+// 3. Hancurkan sesi itu sendiri
 session_destroy();
-session_start();
-$_SESSION['login_success'] = "Anda telah berhasil logout.";
-header("location: index.php");
+
+// 4. Langsung arahkan ke index.php (tanpa pesan)
+header("Location: index.php");
 exit;
 ?>
