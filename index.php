@@ -85,7 +85,7 @@ if (isset($_SESSION['login_success'])) {
             <a href="#kontak" class="text-gray-500 hover:text-biru-utama font-medium">Kontak</a>
             
             <?php if ($logged_in): ?>
-                <a href="dashboard.php" class="text-gray-500 hover:text-biru-utama font-medium">Pesan</a>
+                <a href="dashboard.php" class="text-gray-500 hover:text-biru-utama font-medium">Order</a>
                 <span class="text-biru-teks font-bold">Halo, <?php echo $nama_user; ?></span>
                 <a
                     href="logout.php"
@@ -136,10 +136,10 @@ if (isset($_SESSION['login_success'])) {
               profesional. Nikmati waktu luang Anda.
             </p>
             <a
-              href="#harga"
+              href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>"
               class="bg-white text-biru-utama font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-100 transition duration-300 shadow-xl transform hover:scale-105"
             >
-              Cek Harga Sekarang 🚀
+              Pesan Sekarang 🚀
             </a>
           </div>
           <div class="md:w-1/2 flex justify-center mt-10 md:mt-0">
@@ -166,6 +166,7 @@ if (isset($_SESSION['login_success'])) {
 
         <div class="grid md:grid-cols-3 gap-8">
             
+          <!-- KARTU 1: Cuci Kering Reguler (Ada di DB) -->
           <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
             <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -182,6 +183,7 @@ if (isset($_SESSION['login_success'])) {
             </div>
           </div>
           
+          <!-- KARTU 2: Cuci Setrika (Ada di DB) -->
           <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
             <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -199,6 +201,7 @@ if (isset($_SESSION['login_success'])) {
             </div>
           </div>
 
+          <!-- KARTU 3: Kilat 6 Jam (Ada di DB) -->
           <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
             <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -216,48 +219,13 @@ if (isset($_SESSION['login_success'])) {
             </div>
           </div>
 
+          <!-- KARTU 4: Cuci Satuan Jas (Ada di DB) -->
           <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
             <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M19.4 15c-1.2 0-2.4-.6-3.4-1.6l-2-2.7c-.6-.8-1.5-1.3-2.5-1.3H2.5L2 9.5c.3-.2.6-.4 1-.4h11.5c1.1 0 2.1.8 2.5 1.8l1.7 4.9c.2.6.7 1 1.3 1H22v1c-1 0-1.9-.5-2.6-1z"/>
-                  <path d="M19 17c0-1.1-.9-2-2-2H8.2c-.3 0-.5.1-.7.3L4 18.6V20a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-3z"/>
-                </svg>
-            </div>
-            <h3 class="text-2xl font-semibold text-biru-teks mb-3">Laundry Sepatu</h3>
-            <p class="text-gray-600 mb-4 h-20">Perawatan *deep cleaning* untuk sneakers, kets, atau sepatu formal Anda. Bersih seperti baru.</p>
-            <div class="flex justify-between items-center">
-                <span class="text-lg font-bold text-biru-utama">Rp 35.000/psg</span>
-                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="bg-biru-utama text-white text-sm py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition">
-                    Pesan
-                </a>
-            </div>
-          </div>
-
-          <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
-            <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2a9 9 0 0 0-9 9v5.5a3.5 3.5 0 0 0 3.5 3.5h11A3.5 3.5 0 0 0 21 16.5V11a9 9 0 0 0-9-9z"/>
-                  <path d="M3 12h18"/>
-                  <path d="M14 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
-                </svg>
-            </div>
-            <h3 class="text-2xl font-semibold text-biru-teks mb-3">Laundry Helm</h3>
-            <p class="text-gray-600 mb-4 h-20">Helm bersih, wangi, dan bebas bakteri. Cuci kering bagian dalam dan luar helm.</p>
-            <div class="flex justify-between items-center">
-                <span class="text-lg font-bold text-biru-utama">Rp 25.000/pcs</span>
-                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="bg-biru-utama text-white text-sm py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition">
-                    Pesan
-                </a>
-            </div>
-          </div>
-          
-
-          <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
-            <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 10V8.2A2 2 0 0 0 20.2 6H3.8A2 2 0 0 0 2 8.2V10m0 4v1.8A2 2 0 0 0 3.8 18h16.4a2 2 0 0 0 1.8-1.8V14"/>
-                  <path d="M2 10v4h20v-4H2z"/>
-                  <path d="M6 10v4m4-4v4m4-4v4m4-4v4"/>
+                    <path d="M22 10V8.2A2 2 0 0 0 20.2 6H3.8A2 2 0 0 0 2 8.2V10m0 4v1.8A2 2 0 0 0 3.8 18h16.4a2 2 0 0 0 1.8-1.8V14"/>
+                    <path d="M2 10v4h20v-4H2z"/>
+                    <path d="M6 10v4m4-4v4m4-4v4m4-4v4"/>
                 </svg>
             </div>
              <h3 class="text-2xl font-semibold text-biru-teks mb-3">Cuci Satuan Jas </h3>
@@ -270,62 +238,27 @@ if (isset($_SESSION['login_success'])) {
             </div>
           </div>
           
-
-          <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
-            <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 10V8.2A2 2 0 0 0 20.2 6H3.8A2 2 0 0 0 2 8.2V10m0 4v1.8A2 2 0 0 0 3.8 18h16.4a2 2 0 0 0 1.8-1.8V14"/>
-                  <path d="M2 10v4h20v-4H2z"/>
-                  <path d="M6 10v4m4-4v4m4-4v4m4-4v4"/>
-                </svg>
-            </div>
-            <h3 class="text-2xl font-semibold text-biru-teks mb-3">Cuci Satuan Jas </h3>
-            <p class="text-gray-600 mb-4 h-20">Perawatan khusus jas dan blazer</p>
-            <div class="flex justify-between items-center">
-                <span class="text-lg font-bold text-biru-utama">Rp 50.000/pcs</span>
-                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="bg-biru-utama text-white text-sm py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition">
-                    Pesan
-                </a>
-            </div>
-          </div>
-          
-
-          <div class="bg-white rounded-xl shadow-xl p-8 transform hover:-translate-y-2 transition duration-500 border-t-4 border-biru-utama">
-            <div class="bg-blue-100 text-biru-utama rounded-full h-16 w-16 flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 10V8.2A2 2 0 0 0 20.2 6H3.8A2 2 0 0 0 2 8.2V10m0 4v1.8A2 2 0 0 0 3.8 18h16.4a2 2 0 0 0 1.8-1.8V14"/>
-                  <path d="M2 10v4h20v-4H2z"/>
-                  <path d="M6 10v4m4-4v4m4-4v4m4-4v4"/>
-                </svg>
-            </div>
-            
-            <h3 class="text-2xl font-semibold text-biru-teks mb-3">Laundry Tikar</h3>
-            <p class="text-gray-600 mb-4 h-20">Cuci tikar atau karpet, menghilangkan debu, tungau, dan noda. (Harga per meter persegi).</p>
-            <div class="flex justify-between items-center">
-                <span class="text-lg font-bold text-biru-utama">Rp 15.000/m²</span>
-                <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="bg-biru-utama text-white text-sm py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition">
-                    Pesan
-                </a>
-            </div>
-          </div>
+          <!-- 
+            KARTU UNTUK LAUNDRY SEPATU, HELM, BEDCOVER, TIKAR, DLL.
+            TELAH DIHAPUS
+          -->
 
         </div> 
       </div>
     </section>
-
-    <section id="paket-mahasiswa" class="py-20 bg-white">
+        <section id="layanan" class="py-20 bg-blue sky-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
+        <div class="text-center mb-14">
           <h2 class="text-3xl md:text-4xl font-bold text-biru-teks mb-4">
             🎒 Paket Hemat Mahasiswa
           </h2>
           <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-            Dirancang khusus untuk kebutuhan anak kos. Bersih, cepat, dan ramah di kantong!
+             Dirancang khusus untuk kebutuhan anak kos. Bersih, cepat, dan ramah di kantong!
           </p>
         </div>
+        <div class="grid md:grid-cols-3 gap-8"></div>
 
         <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-          
           <div class="bg-biru-muda rounded-xl shadow-lg overflow-hidden border-l-8 border-biru-utama">
             <div class="flex items-center p-6">
               <div class="flex-shrink-0 bg-biru-utama text-white rounded-full h-20 w-20 flex items-center justify-center shadow-md">
@@ -333,36 +266,60 @@ if (isset($_SESSION['login_success'])) {
                   <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
+
               <div class="ml-6">
+
                 <h3 class="text-2xl font-bold text-biru-teks">Paket Kebut 3 Hari</h3>
+
                 <p class="text-gray-700 mt-1">Cuci + Setrika. Dijamin rapi untuk dipakai kuliah lagi.</p>
+
                 <span class="text-xl font-extrabold text-biru-utama mt-2 block">Rp 10.000 / kg</span>
+
                 <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="mt-3 inline-block bg-biru-utama text-white text-xs py-2 px-3 rounded-full font-semibold hover:bg-blue-700 transition">
+
                     Pesan Paket Ini
+
                 </a>
+
               </div>
+
             </div>
-          </div>
-          
-          <div class="bg-biru-muda rounded-xl shadow-lg overflow-hidden border-l-8 border-biru-utama">
-            <div class="flex items-center p-6">
-              <div class="flex-shrink-0 bg-biru-utama text-white rounded-full h-20 w-20 flex items-center justify-center shadow-md">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4M12 3v18M18 3v4m2-2h-4m-2 12v4m2-2h-4" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 21V3a2 2 0 012-2h10a2 2 0 012 2v18a2 2 0 01-2 2H7a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <div class="ml-6">
-                <h3 class="text-2xl font-bold text-biru-teks">Paket Bulanan (20kg)</h3>
-                <p class="text-gray-700 mt-1">Bayar sekali untuk 20kg cucian (cuci setrika) selama sebulan.</p>
-                <span class="text-xl font-extrabold text-biru-utama mt-2 block">Rp 200.000 / bulan</span>
-                 <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="mt-3 inline-block bg-biru-utama text-white text-xs py-2 px-3 rounded-full font-semibold hover:bg-blue-700 transition">
-                    Pesan Paket Ini
-                </a>
-              </div>
-            </div>
+
           </div>
 
+         
+
+          <div class="bg-biru-muda rounded-xl shadow-lg overflow-hidden border-l-8 border-biru-utama">
+
+            <div class="flex items-center p-6">
+
+              <div class="flex-shrink-0 bg-biru-utama text-white rounded-full h-20 w-20 flex items-center justify-center shadow-md">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4M12 3v18M18 3v4m2-2h-4m-2 12v4m2-2h-4" />
+
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 21V3a2 2 0 012-2h10a2 2 0 012 2v18a2 2 0 01-2 2H7a2 2 0 01-2-2z" />
+
+                </svg>
+
+              </div>
+
+              <div class="ml-6">
+
+                <h3 class="text-2xl font-bold text-biru-teks">Paket Bulanan (20kg)</h3>
+
+                <p class="text-gray-700 mt-1">Bayar sekali untuk 20kg cucian (cuci setrika) selama sebulan.</p>
+
+                <span class="text-xl font-extrabold text-biru-utama mt-2 block">Rp 200.000 / bulan</span>
+
+                 <a href="<?php echo $logged_in ? 'dashboard.php' : 'login.php'; ?>" class="mt-3 inline-block bg-biru-utama text-white text-xs py-2 px-3 rounded-full font-semibold hover:bg-blue-700 transition">
+
+                    Pesan Paket Ini
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -385,7 +342,7 @@ if (isset($_SESSION['login_success'])) {
                     <ul class="space-y-2">
                     <li><a href="index.php" class="text-blue-200 hover:text-white transition">Home</a></li>
                     <li><a href="#layanan" class="text-blue-200 hover:text-white transition">Layanan</a></li>
-                    <li><a href="#paket-mahasiswa" class="text-blue-200 hover:text-white transition">Paket Mahasiswa</a></li>
+                    <!-- Hapus link ke paket mahasiswa karena sectionnya dihapus -->
                     <li><a href="#kontak" class="text-blue-200 hover:text-white transition">Kontak</a></li>
                     </ul>
                 </div>
